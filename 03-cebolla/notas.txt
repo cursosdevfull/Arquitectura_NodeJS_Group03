@@ -1,0 +1,13 @@
+DOMAIN
+    MODEL
+        - Book
+    REPOSITORIES
+        - LibraryRepository
+        - StoreRepository
+APPLICATION
+    - LibraryApplication
+INFRASTRUCTURE
+    - LibraryDataInMemory
+    - StoreDataInMemory
+PRESENTATION
+    - LibraryApi

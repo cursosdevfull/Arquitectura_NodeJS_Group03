@@ -1,0 +1,11 @@
+ADAPTERS
+- LibraryApiAdapter
+- StoreAdapterInMemory
+- LibraryAdapterInMemory
+PORTS
+- LibraryRepository
+- StoreRepository
+- LibraryApiRepository
+
+- LibraryAplication
+- Library

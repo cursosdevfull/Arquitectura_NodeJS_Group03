@@ -1,0 +1,7 @@
+Presentation
+- LibraryApi
+Business
+- LibraryBusiness
+Data
+- LibraryDataInMemory
+- StoreDataInMemory

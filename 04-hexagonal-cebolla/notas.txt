@@ -1,0 +1,13 @@
+ENTITIES
+- Book
+APPLICATION
+- LibraryApplication
+- LibraryRepository
+- StoreRepository
+ADAPTERS
+- LibraryAdapter
+- StoreAdapter
+- LibraryApi
+- LibraryApiRepository
+PRESENTATION
+- Library
