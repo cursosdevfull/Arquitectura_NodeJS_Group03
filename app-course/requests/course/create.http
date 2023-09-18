@@ -1,0 +1,17 @@
+POST http://localhost:3000/course
+content-type: application/json
+
+{
+    "title": "Arquitectura  nodeJS con  Ddd",
+    "description": "NodeJS is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
+    "goals": [{
+        "id": "aab23a2c-853a-46db-be2a-0835338bb1b8",
+        "description": "Learn about NodeJS"
+    }, {
+        "id": "e4498c0e-2241-4578-86e2-2e08587d23c9",
+        "description": "Learn about Express"
+    }, {
+        "id": "740ee122-75cc-468a-982e-5d21f1792f9f",
+        "description": "Learn about MongoDB"
+    }]
+}
