@@ -17,8 +17,8 @@ export class CourseController {
   async add(@Body() body: CourseCreateDto) {
     const slugGenerate = await this.courseService.generateSlug(body.title);
     const props: CourseProps = {
-      id: uuidv4(),
       slug: slugGenerate,
+      id: uuidv4(),
       ...body,
     };
 
