@@ -1,0 +1,10 @@
+POST http://localhost:3000/appointment
+content-type: application/json
+
+{
+    "id": "9f8099c6-e775-4a2f-b448-4bfcddc33160",
+    "patientId": "6be4f1c8-45da-462f-84d3-945a2dcbf952",
+    "medicId": "3762e147-a664-42b1-b6d2-d97386cceb26",
+    "dateAppointment": "2021-05-01T14:00:00.000Z",
+    "country": "EC"
+}
