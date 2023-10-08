@@ -1,7 +1,10 @@
+import { AggregateRoot } from '@nestjs/cqrs';
+
 import { STATUS } from '../../../../core/domain/status.type';
 import { Goal } from '../entities/Goal';
 import { ItemSyllabus } from '../entities/ItemSyllabus';
 import { Requeriment } from '../entities/Requeriment';
+import { CourseDeletedEvent } from '../events/CourseDeletedEvent';
 
 export interface CourseEssentials {
   id: string;
@@ -15,6 +18,9 @@ export interface CourseOptionals {
   itemSyllabus: ItemSyllabus[];
   status: STATUS;
   slug: string;
+  createdAt: Date;
+  updatedAt: Date | null;
+  deletedAt: Date | null;
 }
 
 export type CourseProps = CourseEssentials & Partial<CourseOptionals>;
@@ -22,7 +28,7 @@ export type CourseUpdateProps = Partial<
   Pick<CourseEssentials, 'title'> & CourseOptionals
 >;
 
-export class Course implements IRoot {
+export class Course extends AggregateRoot {
   private readonly id: string;
   private title: string;
   private description: string;
@@ -36,6 +42,7 @@ export class Course implements IRoot {
   private deletedAt: Date | null;
 
   constructor(props: CourseProps) {
+    super();
     Object.assign(this, props);
     this.status = 'draft';
     this.createdAt = new Date();
@@ -51,6 +58,9 @@ export class Course implements IRoot {
       itemSyllabus: this.itemSyllabus,
       status: this.status,
       slug: this.slug,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+      deletedAt: this.deletedAt,
     };
   }
 
@@ -62,5 +72,6 @@ export class Course implements IRoot {
   delete() {
     this.status = 'deleted';
     this.deletedAt = new Date();
+    this.apply(Object.assign(new CourseDeletedEvent(), this));
   }
 }

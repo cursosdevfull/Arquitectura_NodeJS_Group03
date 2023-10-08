@@ -1,8 +1,16 @@
+import { Inject } from '@nestjs/common';
+import { EventPublisher } from '@nestjs/cqrs';
+
+import { CourseCreatedEvent } from '../events/CourseCreatedEvent';
 import { IdVO } from '../value-objects/id.vo';
 import { Course, CourseProps } from './Course';
 
 export class CourseFactory {
-  static create(props: CourseProps) {
+  constructor(
+    @Inject(EventPublisher) private readonly eventPublisher: EventPublisher,
+  ) {}
+
+  create(props: CourseProps) {
     IdVO.create(props.id);
 
     if (props.title.length > 120) {
@@ -31,6 +39,11 @@ export class CourseFactory {
       );
     }
 
-    return new Course(props);
+    const courseCreated = new Course(props);
+
+    this.eventPublisher.mergeObjectContext(courseCreated);
+    courseCreated.apply(Object.assign(new CourseCreatedEvent(), courseCreated));
+
+    return courseCreated;
   }
 }

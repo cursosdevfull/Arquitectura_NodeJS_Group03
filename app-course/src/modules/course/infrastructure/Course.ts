@@ -25,4 +25,12 @@ export class CourseInfrastructure implements CourseRepository {
 
     return Promise.resolve(course);
   }
+
+  async findById(id: string): Promise<Course> {
+    return Promise.resolve(
+      CourseInMemory.listCourse.find(
+        (course: Course) => course.properties().id === id,
+      ),
+    );
+  }
 }
