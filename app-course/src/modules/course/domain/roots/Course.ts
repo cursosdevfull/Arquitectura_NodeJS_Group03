@@ -5,6 +5,7 @@ import { Goal } from '../entities/Goal';
 import { ItemSyllabus } from '../entities/ItemSyllabus';
 import { Requeriment } from '../entities/Requeriment';
 import { CourseDeletedEvent } from '../events/CourseDeletedEvent';
+import { CourseUpdatedEvent } from '../events/CourseUpdatedEvent';
 
 export interface CourseEssentials {
   id: string;
@@ -67,6 +68,7 @@ export class Course extends AggregateRoot {
   update(props: CourseUpdateProps) {
     Object.assign(this, props);
     this.updatedAt = new Date();
+    this.apply(Object.assign(new CourseUpdatedEvent(), this));
   }
 
   delete() {

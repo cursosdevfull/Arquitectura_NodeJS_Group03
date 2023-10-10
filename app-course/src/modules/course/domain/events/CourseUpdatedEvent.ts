@@ -5,7 +5,7 @@ import { Goal } from '../entities/Goal';
 import { ItemSyllabus } from '../entities/ItemSyllabus';
 import { Requeriment } from '../entities/Requeriment';
 
-export class CourseDeletedEvent implements IEvent {
+export class CourseUpdatedEvent implements IEvent {
   readonly id: string;
   readonly title: string;
   readonly description: string;

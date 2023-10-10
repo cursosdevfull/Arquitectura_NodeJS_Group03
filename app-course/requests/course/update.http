@@ -1,0 +1,6 @@
+PUT http://localhost:3000/course/39ba7b02-cc78-4ac2-a053-2e2835651448
+content-type: application/json
+
+{
+    "title": "Arquitectura"
+}

@@ -1,23 +1,34 @@
-import { Body, Controller, Delete, Param, Post } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { v4 as uuidv4 } from 'uuid';
 
 import { CourseCreateCommand } from '../application/commands/CourseCreateCommand';
 import { CourseDeleteCommand } from '../application/commands/CourseDeleteCommand';
-import { CourseCreate } from '../application/CourseCreate';
+import { CourseUpdateCommand } from '../application/commands/CourseUpdateCommand';
+import { CourseGetAllQuery } from '../application/queries/CourseGetAllQuery';
+import { CourseGetOneQuery } from '../application/queries/CourseGetOneQuery';
 import { CourseProps } from '../domain/roots/Course';
-import { CourseFactory } from '../domain/roots/CourseFactory';
 import { CourseService } from './CourseService';
 import { CourseCreateDto } from './dtos/CourseCreate.dto';
 import { CourseDeleteDto } from './dtos/CourseDelete.dto';
+import { CourseGetOneDto } from './dtos/CourseGetOne.dto';
+import { CourseUpdateDto } from './dtos/CourseUpdate.dto';
+import { CourseUpdateParamDto } from './dtos/CourseUpdateParam.dto';
 
 @Controller('course')
 export class CourseController {
   constructor(
-    private readonly application: CourseCreate,
     private readonly courseService: CourseService,
-    private readonly courseFactory: CourseFactory,
     private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
   ) {}
   @Post()
   async add(@Body() body: CourseCreateDto) {
@@ -43,5 +54,36 @@ export class CourseController {
     const courseDeleted = this.commandBus.execute(command);
 
     return courseDeleted;
+  }
+
+  @Put(':id')
+  async update(
+    @Param() param: CourseUpdateParamDto,
+    @Body() body: CourseUpdateDto,
+  ) {
+    const props: CourseProps = {
+      id: param.id,
+      ...body,
+    };
+    const command = Object.assign(new CourseUpdateCommand(), props);
+    const courseDeleted = this.commandBus.execute(command);
+
+    return courseDeleted;
+  }
+
+  @Get(':id')
+  async getOne(@Param() param: CourseGetOneDto) {
+    const query = Object.assign(new CourseGetOneQuery(), param);
+    const course = await this.queryBus.execute(query);
+
+    return course;
+  }
+
+  @Get()
+  async getAll() {
+    const query = new CourseGetAllQuery();
+    const courses = await this.queryBus.execute(query);
+
+    return courses;
   }
 }

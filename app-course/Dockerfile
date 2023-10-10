@@ -8,6 +8,7 @@ RUN npm prune --production
 
 FROM node:18.18.0-alpine3.17
 WORKDIR /app
+RUN apk add curl
 COPY --from=BUILD /app/dist ./dist
 COPY --from=BUILD /app/package.json .
 COPY --from=BUILD /app/node_modules ./node_modules

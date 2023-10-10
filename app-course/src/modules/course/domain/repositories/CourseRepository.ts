@@ -5,4 +5,5 @@ export interface CourseRepository {
   findBySlug(slug: string): Promise<Course>;
   findById(id: string): Promise<Course>;
   save(course: Course): Promise<Course>;
+  findAll(): Promise<Course[]>;
 }

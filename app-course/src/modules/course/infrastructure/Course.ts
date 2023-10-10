@@ -21,7 +21,14 @@ export class CourseInfrastructure implements CourseRepository {
   }
 
   async save(course: Course): Promise<Course> {
-    CourseInMemory.listCourse.push(course);
+    const position = CourseInMemory.listCourse.findIndex(
+      (el: Course) => el.properties().id === course.properties().id,
+    );
+    if (position >= 0) {
+      CourseInMemory.listCourse[position] = course;
+    } else {
+      CourseInMemory.listCourse.push(course);
+    }
 
     return Promise.resolve(course);
   }
@@ -32,5 +39,9 @@ export class CourseInfrastructure implements CourseRepository {
         (course: Course) => course.properties().id === id,
       ),
     );
+  }
+
+  async findAll(): Promise<Course[]> {
+    return Promise.resolve(CourseInMemory.listCourse);
   }
 }

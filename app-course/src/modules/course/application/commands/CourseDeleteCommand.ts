@@ -3,7 +3,6 @@ import { CommandHandler, ICommand, ICommandHandler } from '@nestjs/cqrs';
 
 import { CourseRepository } from '../../domain/repositories/CourseRepository';
 import { Course } from '../../domain/roots/Course';
-import { CourseFactory } from '../../domain/roots/CourseFactory';
 import { CourseInfrastructure } from '../../infrastructure/Course';
 
 export class CourseDeleteCommand implements ICommand {
@@ -16,7 +15,6 @@ export class CourseDeleteCommandHandler
 {
   constructor(
     @Inject(CourseInfrastructure) private readonly repository: CourseRepository,
-    private readonly courseFactory: CourseFactory,
   ) {}
 
   async execute(command: CourseDeleteCommand): Promise<any> {

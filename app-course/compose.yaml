@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  mysql-service:
+    image: mysql:8
+    container_name: mysql-container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: db_course
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 12345
+    ports:
+      - 3306:3306
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 2s
+    networks:
+      - net-course
+
+  app-service:
+    build: .
+    image: app
+    container_name: app-container
+    restart: always
+    ports:
+      - 8000:3000
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:3000/healthcheck']
+      interval: 10s
+      timeout: 15s
+      retries: 10
+      start_period: 2s
+    environment:
+      DB_HOST: mysql-service
+      DB_USER: user
+      DB_PASSWORD: 12345
+      DB_NAME: db_course
+      DB_PORT: 3306
+      DB_SYNCHRONIZE: 'true'
+      DB_LOGGING: 'true'
+    depends_on:
+      mysql-service:
+        condition: service_healthy
+    networks:
+      - net-course
+
+networks:
+  net-course:
+    driver: bridge
