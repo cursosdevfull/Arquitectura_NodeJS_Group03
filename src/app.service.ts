@@ -30,7 +30,7 @@ export class AppService {
   }
 
   async onModuleInit() {
-    this.dataSource = await new DataSource({
+    /*this.dataSource = await new DataSource({
       type: 'mysql',
       ...this.getParametersConnection(),
     })
@@ -38,7 +38,7 @@ export class AppService {
       .catch((error) => {
         console.log(error);
         process.exit(1);
-      });
+      });*/
   }
 
   async onModuleDestroy() {}
