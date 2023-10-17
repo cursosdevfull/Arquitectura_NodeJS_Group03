@@ -3,3 +3,5 @@ app-first
 architecture-hexagonal
 app-course
 node_modules
+.env
+dist
