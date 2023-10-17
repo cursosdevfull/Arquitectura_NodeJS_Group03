@@ -1,5 +1,6 @@
-PUT http://localhost:3000/course/39ba7b02-cc78-4ac2-a053-2e2835651448
+PUT http://localhost:3000/course/87416e88-e175-4f0f-9d16-8ec059d72dd4
 content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNWQ1Mzk4Ny0zYTg2LTQ5ZDItOWNlNy05Yzc0MDViMjJjNzEiLCJlbWFpbCI6InVzZXIwMUBlbWFpbC5jb20iLCJyb2xlcyI6WyJBRE1JTiIsIk1FRElDIl0sImlhdCI6MTY5NzQxOTE3OCwiZXhwIjoxNjk3NDIxNTc4fQ.fhB79ZWQGJxjyWduUtoITkKqeq1bTETaNu8vVpT1aeU
 
 {
     "title": "Arquitectura"

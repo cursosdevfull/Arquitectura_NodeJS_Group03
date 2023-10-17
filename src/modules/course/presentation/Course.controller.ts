@@ -3,11 +3,18 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   Post,
   Put,
+  UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { Roles } from 'src/core/presentation/decorators/role.decorator';
+import { AuthenticationGuard } from 'src/core/presentation/guards/authentication.guard';
+import { AuthorizationGuard } from 'src/core/presentation/guards/authorization.guard';
+import { RegisterEventInterceptor } from 'src/extras/register-event.interceptor';
 import { v4 as uuidv4 } from 'uuid';
 
 import { CourseCreateCommand } from '../application/commands/CourseCreateCommand';
@@ -24,13 +31,17 @@ import { CourseUpdateDto } from './dtos/CourseUpdate.dto';
 import { CourseUpdateParamDto } from './dtos/CourseUpdateParam.dto';
 
 @Controller('course')
+@Roles('ADMIN')
+@UseGuards(AuthenticationGuard)
 export class CourseController {
   constructor(
     private readonly courseService: CourseService,
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
+    private readonly logger: Logger,
   ) {}
   @Post()
+  @UseGuards(AuthorizationGuard)
   async add(@Body() body: CourseCreateDto) {
     const slugGenerate = await this.courseService.generateSlug(body.title);
     const props: CourseProps = {
@@ -49,6 +60,7 @@ export class CourseController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthorizationGuard)
   async delete(@Param() param: CourseDeleteDto) {
     const command = Object.assign(new CourseDeleteCommand(), param);
     const courseDeleted = this.commandBus.execute(command);
@@ -57,6 +69,7 @@ export class CourseController {
   }
 
   @Put(':id')
+  @UseGuards(AuthorizationGuard)
   async update(
     @Param() param: CourseUpdateParamDto,
     @Body() body: CourseUpdateDto,
@@ -80,7 +93,11 @@ export class CourseController {
   }
 
   @Get()
+  //@UseGuards(AuthenticationTestGuard)
+  @UseInterceptors(RegisterEventInterceptor)
   async getAll() {
+    this.logger.log('Controller method executed', 'CourseController');
+
     const query = new CourseGetAllQuery();
     const courses = await this.queryBus.execute(query);
 

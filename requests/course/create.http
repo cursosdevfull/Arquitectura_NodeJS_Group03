@@ -1,5 +1,6 @@
 POST http://localhost:3000/course
 content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNWQ1Mzk4Ny0zYTg2LTQ5ZDItOWNlNy05Yzc0MDViMjJjNzEiLCJlbWFpbCI6InVzZXIwMUBlbWFpbC5jb20iLCJyb2xlcyI6WyJBRE1JTiIsIk1FRElDIl0sImlhdCI6MTY5NzQxOTE3OCwiZXhwIjoxNjk3NDIxNTc4fQ.fhB79ZWQGJxjyWduUtoITkKqeq1bTETaNu8vVpT1aeU
 
 {
     "title": "Typescript FullStack",

@@ -1,2 +1,2 @@
-GET http://localhost:3000/course/8c8ceab7-e86b-4dde-a5b7-e432edf8c34d
-
+GET http://localhost:3000/course/87416e88-e175-4f0f-9d16-8ec059d72dd4
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNWQ1Mzk4Ny0zYTg2LTQ5ZDItOWNlNy05Yzc0MDViMjJjNzEiLCJlbWFpbCI6InVzZXIwMUBlbWFpbC5jb20iLCJyb2xlcyI6WyJBRE1JTiIsIk1FRElDIl0sImlhdCI6MTY5NzQxOTE3OCwiZXhwIjoxNjk3NDIxNTc4fQ.fhB79ZWQGJxjyWduUtoITkKqeq1bTETaNu8vVpT1aeU

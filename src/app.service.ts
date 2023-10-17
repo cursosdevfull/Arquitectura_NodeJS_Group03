@@ -1,6 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 
+import { CourseEntity } from './modules/course/infrastructure/entities/course.entity';
+import { GoalEntity } from './modules/course/infrastructure/entities/goal.entity';
+import { ItemSyllabusEntity } from './modules/course/infrastructure/entities/itemSyllabus';
+import { RequerimentEntity } from './modules/course/infrastructure/entities/requeriment';
+import { Parameters } from './parameters';
+
 export type IDatabase = {
   host: string;
   port: number;
@@ -13,32 +19,42 @@ export type IDatabase = {
 
 @Injectable()
 export class AppService {
-  private dataSource: DataSource | void;
+  private static dataSource: DataSource | void;
 
   getParametersConnection() {
     const database: IDatabase = {
-      host: process.env.DB_HOST || 'localhost',
-      port: Number(process.env.DB_PORT || 3306),
-      username: process.env.DB_USER || 'user',
-      password: process.env.DB_PASSWORD || '12345',
-      database: process.env.DB_NAME || 'db_course',
-      synchronize: Boolean(process.env.DB_SYNCHRONIZE || true),
-      logging: Boolean(process.env.DB_LOGGING || true),
+      host: Parameters.DB_HOST,
+      port: Parameters.DB_PORT,
+      username: Parameters.DB_USER,
+      password: Parameters.DB_PASSWORD,
+      database: Parameters.DB_NAME,
+      synchronize: Parameters.DB_SYNCHRONIZE,
+      logging: Parameters.DB_LOGGING,
     };
 
     return database;
   }
 
+  static get manager() {
+    return (this.dataSource as DataSource).manager;
+  }
+
   async onModuleInit() {
-    /*this.dataSource = await new DataSource({
+    AppService.dataSource = await new DataSource({
       type: 'mysql',
       ...this.getParametersConnection(),
+      entities: [
+        CourseEntity,
+        GoalEntity,
+        RequerimentEntity,
+        ItemSyllabusEntity,
+      ],
     })
       .initialize()
       .catch((error) => {
         console.log(error);
         process.exit(1);
-      });*/
+      });
   }
 
   async onModuleDestroy() {}

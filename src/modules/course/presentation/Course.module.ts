@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 
 import { CourseCreateCommandHandler } from '../application/commands/CourseCreateCommand';
@@ -40,6 +40,7 @@ const presentations = [CourseService];
     ...domains,
     ...infrastructures,
     ...presentations,
+    Logger,
   ],
   imports: [CqrsModule],
 })

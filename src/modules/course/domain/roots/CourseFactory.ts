@@ -24,19 +24,19 @@ export class CourseFactory {
     }
 
     if (props.goals && props.goals.length < 2) {
-      throw new Error('Invalid goals. Goals must be greater than 1');
+      //throw new Error('Invalid goals. Goals must be greater than 1');
     }
 
     if (props.requeriments && props.requeriments.length < 2) {
-      throw new Error(
+      /*throw new Error(
         'Invalid requeriments. Requeriments must be greater than 1',
-      );
+      );*/
     }
 
     if (props.itemSyllabus && props.itemSyllabus.length < 2) {
-      throw new Error(
+      /*throw new Error(
         'Invalid itemSyllabus. itemSyllabus must be greater than 1',
-      );
+      );*/
     }
 
     const courseCreated = new Course(props);
